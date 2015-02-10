@@ -18,7 +18,7 @@
 		 :out-path (.replaceAll op ".\\w+$" ".clj")
 		 :ns (.replaceAll (.replaceAll op ".\\w+$" "") (str fs) ".")}
 		))
-
+;test
 (defn process
 	[path & op]
 	(def option* (merge {:encoding "UTF-8"} (first op)))
