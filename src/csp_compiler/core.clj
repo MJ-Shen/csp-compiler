@@ -18,10 +18,16 @@
 		 :out-path (.replaceAll op ".\\w+$" ".clj")
 		 :ns (.replaceAll (.replaceAll op ".\\w+$" "") (str fs) ".")}
 		))
-;test
+
 (defn process
-	[path & op]
-	(def option* (merge {:encoding "UTF-8"} (first op)))
+	[path option*]
 	(println (str option*))
 	(let [content (read-file path option*) csp-meta (parse path)]
 		(write-file csp-meta content option*)))
+
+(defn csp
+	"cps  call the clojure server page (also created or update if necessary)
+	:option [:encoding :auto-sync]"
+	[path & op]
+	(def option* (merge {:encoding "UTF-8"} (first op)))
+	(process path option*))
