@@ -7,3 +7,6 @@ pom.xml.asc
 *.class
 /.lein-*
 /.nrepl-port
+src/csp_compiler/gen.clj
+cspBuilt/csp/123.clj
+cspBuilt/csp/aa.clj
