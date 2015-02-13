@@ -5,6 +5,7 @@
 
 (defn- create-dir
 	[^String fp]
+	(println fp)
 	(-> fp file parent mkdirs))
 
 (def CR (System/getProperty "line.separator"))
@@ -32,13 +33,12 @@
 		(with-open [^java.io.Writer w (jio/writer fp :encoding (:encoding option))]
     	(loop [offset (init-ns (:ns csp-meta) content w)]
     		(let [nexl (.indexOf content "<`" offset)]
-    			(println "A" nexl)
   				(if (= -1 nexl)
 						(.write w (str \" (filter! (.substring content (+ offset 2) )) \"))
   					(let [nexr (.indexOf content "`>" nexl)]
-  						(println "B" nexr)
     					(.write w 
     						(str \" (filter! (.substring content (+ offset 2) nexl)) "\" " (.substring content (+ nexl 2) nexr ) " "))
     					(recur nexr)))))
-    	(.write w "))"))))
+    	(.write w "))"))
+		(load-file fp)))
 
