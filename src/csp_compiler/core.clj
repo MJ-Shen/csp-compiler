@@ -4,7 +4,7 @@
 	(:require [clojure.java.io :as jio])
 	(:import [java.io File]))
 
-(def *csp-ns-map* (ref {}))
+(def ^{:dynamic true} *csp-ns-map* (atom {}))
 
 (defn read-file [path option]
 	(let [content (slurp path :encoding (:encoding option))]
@@ -28,18 +28,24 @@
 		((eval 'out))))
 
 (defn if-recompile
-	[csp-meta]
-	(cond
-		(:force-sync option*) true
-		(:read-time csp-meta)))
+	"whether recompile the csp or not"
+	[csp-meta option*]
+	(if-let [fs (:force-sync option*)]
+		fs
+		(< (:read-time csp-meta) (-> csp-meta :src file .lastModified))))
+
 
 (defn process
 	[path option*]
 	(println (str option*))
-	(let [csp-meta (parse path)]
-		if())
-	(let [content (read-file path option*) ]
-		(write-file csp-meta content option*)))
+	(let [csp-meta (parse path) ns (:ns csp-meta)]
+		(if (if-recompile (@*csp-ns-map* ns) option*)
+			(let [content (read-file path option*)]
+				(write-file csp-meta content option*)
+				(swap! *csp-ns-map* assoc ns 
+					(assoc csp-meta :read-time (System/currentTimeMillis))))
+			(invoke ns))))
+			
 
 (defn csp
 	"cps  call the clojure server page (also created or update if necessary)
