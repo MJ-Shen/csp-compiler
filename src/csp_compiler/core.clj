@@ -1,15 +1,15 @@
 (ns csp-compiler.core
 	(:use	[me.raynes.fs :only [file]]
 			[csp-compiler.gen]
-			[csp-compiler.mylog]))
-	; (:require [clojure.java.io :as jio])
+			[csp-compiler.mylog])
+	(:require [clojure.java.io :as io]))
 	; (:import [java.io File]))
 
 (def ^{:dynamic true} *csp-ns-map* (atom {}))
 
 (defn read-file [path option]
 	(log "read-file:start#" path)
-	(slurp path :encoding (:encoding option)))
+	(slurp (io/resource path) :encoding (:encoding option)))
 
 
 (defn- parse
@@ -36,7 +36,7 @@
 	(or (not csp-meta)
 		(if-let [fs (:force-sync option*)]
 			fs
-			(< (:read-time csp-meta) (-> csp-meta :src file .lastModified)))))
+			(< (:read-time csp-meta) (-> csp-meta :src io/resource file .lastModified)))))
 
 
 (defn process

@@ -18,11 +18,11 @@
 		(if (= "<`@" (.substring header 0 3))
 			(let [offset (.indexOf header "`>")]
 				(.write w 
-					(str "(ns " ns CR (.substring header 3 offset) ")" CR "(defn out [] (str "))
+					(apply str "(ns " ns CR (.substring header 3 offset) ")" CR "(defn out [] (apply str "))
 				offset)
 			(do 
 				(.write w 
-					(str "(ns " ns ")" CR "(defn out [] (str "))
+					(apply str "(ns " ns ")" CR "(defn out [] (apply str "))
 				0))))
 
 (defn filter! [content]

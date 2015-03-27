@@ -1,0 +1,3 @@
+<`@(:use [me.raynes.fs :only [mkdirs parent file]]
+        [clojure.string :only [triml]])`>
+111ww2222222
