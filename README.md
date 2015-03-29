@@ -11,9 +11,12 @@ Add the following dependency to your project.clj file:
 ## Usage
 
 Here is Demo
+
+```clojure
 (ns hello-world.core
   (:use [csp-compiler.core :only [csp]]))
   (csp "PATH/XXX.csp");please put csp file under "resources" for war installing
+```
 
 ## Dependencies
 	[me.raynes/fs "1.4.6"](https://github.com/Raynes/fs)
