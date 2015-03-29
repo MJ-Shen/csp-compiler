@@ -19,7 +19,8 @@ Here is Demo
 ```
 
 ## Dependencies
-	[me.raynes/fs "1.4.6"](https://github.com/Raynes/fs)
+
+* [me.raynes/fs "1.4.6"](https://github.com/Raynes/fs)
 	
 ## License
 
